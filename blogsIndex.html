@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <!-- Theme Made By www.w3schools.com - No Copyright -->
+    <title>Linear regression</title>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({ TeX: { extensions: ["color.js"] }});
+    </script>  
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans|Libre+Baskerville" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="styles/blogLinearRegression.css" type="text/css" rel="stylesheet">
+  </head>
+
+  <body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+        </button>
+        <a class="navbar-brand" href="index.html">Kaushik Das</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="blogsIndex.html">Blogs</a></li>
+          <li><a href="#">Drawings</a></li>
+          <li><a href="#">Photos</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+      <ul class="sidebar-nav">
+        <li class="sidebar-brand">
+          <a href="#">Blog menu</a>
+        </li>
+        <li>
+          <a href="#">Linear regression</a>
+        </li>
+        <li>
+          <a href="blogsTrigonometry.html">Trigonometry</a>
+        </li>
+      </ul>
+  </div>
+  <!-- /#sidebar-wrapper -->
+
+  <!-- Page Content -->
+  <div id="page-content-wrapper">
+    <div class="container-fluid">
+      <a href="#menu-toggle" class="btn btn-primary" id="menu-toggle">Toggle Menu</a>
+      <div class="mathematical-text">
+        <h1>Vectorization of Multivariate Linear Regression</h1>
+
+        <h3>1. INTRODUCTION</h3>
+        <p>
+          If we have value \(x \in \mathbb{R}\) for only one feature then linear
+          regression predicts the output with the hypothesis as
+          $$
+          h_{\boldsymbol{\theta}}(x) = \theta_0 + \theta_1 x
+          $$
+          where \(\theta_0, \theta_1 \in \mathbb{R}\) are the linear regression 
+          parameters and \(\boldsymbol{\theta}\) is a two dimensional regression parameter
+          vector:
+          $$
+           \boldsymbol{\theta} = 
+            \begin{bmatrix}
+             \theta_0 \\
+             \theta_1
+            \end{bmatrix}
+          $$
+        </p>
+
+        <p style="text-indent: 2.0em">
+          In case of multiple features let us assume we have 
+          <span style="color:red">\(n\)</span> features in an input data-set 
+          \(\boldsymbol{X}\) with total <span style="color:red">\(m\)</span> training
+          samples. Therefore, \(\boldsymbol{X}\) will be an \(m \times n\) matrix 
+          as shown below:
+          \[
+          \boldsymbol{X} = 
+            \begin{bmatrix}
+            x_{1}^{(1)} & x_{2}^{(1)} & x_{3}^{(1)} & \cdots & x_{n}^{(1)} \\
+            x_{1}^{(2)} & x_{2}^{(2)} & x_{3}^{(2)} & \cdots & x_{n}^{(2)} \\
+            \vdots      & \vdots      & \vdots      & \ddots & \vdots \\
+            x_{1}^{(m)} & x_{2}^{(m)} & x_{3}^{(m)} & \cdots & x_{n}^{(m)} \\
+            \end{bmatrix}_{\textcolor{red}{m \times n}}
+          \]  
+        </p>
+
+        <p>
+          Additionally, we will use below two notations related to 
+          \(\boldsymbol{X}\) :
+          <table>
+            <tr>
+              <td>\(\boldsymbol{x}^{(i)} \)</td>
+              <td>:</td>
+              <td>\(i^{th}\) row of \(\boldsymbol{X}\) that stores input data 
+                \((\in \mathbb{R}^{n})\) for the \(i^{th}\) training sample,
+                i.e., the values of \(n\) features, and
+              </td>
+            </tr>
+            <tr>
+              <td>\(x_{j}^{(i)}\)</td>
+              <td>:</td>
+              <td>value \((\in \mathbb{R})\) of the \(j^{th}\) feature of the
+                \(i^{th}\) sample
+              </td>
+            </tr>
+          </table>
+        </p>
+
+        <p style="text-indent: 2.0em">
+          The <span style="color:red">\(m\)</span> dimensional vector 
+          \(\boldsymbol{y} \ (\in \mathbb{R}^m)\) stores output values 
+          for \(m\) training samples:
+          \[
+          \boldsymbol{y} = 
+           \begin{bmatrix}
+            y^{(1)} \\
+            y^{(2)} \\
+            \vdots  \\
+            y^{(m)} \\
+           \end{bmatrix}_{\textcolor{red}{m \times 1}}
+          \]
+          where \(y^{(i)} \in \mathbb{R}\) is the output value for the \(i^{th}\)
+          training sample \((i = 1, 2, 3, \dots, m)\). Thus, 
+          \((\boldsymbol{x}^{(i)}, y^{(i)})\) denotes the \(i^{th}\)
+          <i>training data sample</i>.
+        </p>
+
+        <p style="text-indent: 2.0em">
+          According to linear regression, the <i>predicted output</i> value for
+          the \(i^{th}\) training data sample is given by the hypothesis:
+          \begin{equation}
+           h_{\boldsymbol{\theta}}(\mathbf{x}^{(i)}) = \theta_0 
+                   + \theta_1 x_1^{(i)} + \theta_2 x_2^{(i)}
+                   + \ldots
+                   + \theta_n x_n^{(i)} \tag{1}\label{eq:1}
+          \end{equation}
+          If we introduce a fictitious \(0^{th}\) column to the
+          matrix \(\mathbf{X}\) making it an \(\textcolor{red}{m \times (n + 1)}\)
+          matrix such that \(x_0^{(i)} = 1, i = 1, 2, 3, \ldots, m\), i.e.,
+          \[
+          \mathbf{X} = 
+           \begin{bmatrix}
+            x_{0}^{(1)} (= 1) & \
+              x_{1}^{(1)} & x_{2}^{(1)} & x_{3}^{(1)} & \cdots & x_{n}^{(1)} \\
+            x_{0}^{(1)} (= 1) & \
+              x_{1}^{(2)} & x_{2}^{(2)} & x_{3}^{(2)} & \cdots & x_{n}^{(2)} \\
+            \vdots            & \
+              \vdots      & \vdots      & \vdots      & \ddots & \vdots \\
+            x_{0}^{(1)} (= 1) & \
+              x_{1}^{(m)} & x_{2}^{(m)} & x_{3}^{(m)} & \cdots & x_{n}^{(m)} \\
+           \end{bmatrix}_{\textcolor{red}{m \times (n+1)}}
+          \]
+          equation (\ref{eq:1}) can be rewritten as:
+          \begin{align}
+           h_{\boldsymbol{\theta}}(\mathbf{x}^{(i)}) &= \theta_0 x_0^{(i)}
+                   + \theta_1 x_1^{(i)} + \theta_2 x_2^{(i)}
+                   + \ldots
+                   + \theta_n x_n^{(i)} \tag{2}\label{eq:2} \\
+                   &= \boldsymbol{\theta}^T\mathbf{x}^{(i)} \nonumber \\
+                   &= \left(\mathbf{x}^{(i)}\right)^T\boldsymbol{\theta} \nonumber
+          \end{align}
+          where \(\boldsymbol{\theta}\) is now an <span style="color:red">
+          \(n+1\)</span> dimensional parameter vector:
+          \[
+           \boldsymbol{\theta} = 
+           \begin{bmatrix}
+            \theta_0 \\
+            \theta_1 \\
+            \theta_2 \\
+            \vdots \\
+            \theta_n
+           \end{bmatrix}_{\textcolor{red}{(n+1) \times 1}}
+          \]
+        </p>
+
+        <h3>2. COST FUNCTION AND GRADIENT DESCENT</h3>
+
+        <p>
+          The cost function for <i>multivariate</i> linear regression
+          \(J(\theta_0, \theta_1, \ldots , \theta_n)\), or simply
+          \(J(\boldsymbol{\theta})\), expressed as
+            \(J(\boldsymbol{\theta}) = \frac{1}{2m}\sum_{i=1}^{m}
+                (h_{\boldsymbol{\theta}}(\mathbf{x}^{(i)}) - y^{(i)})^2\) can be
+          written as:
+          \begin{align}
+            J(\boldsymbol{\theta}) =
+            \frac{1}{2m}\sum_{i=1}^{m}
+            (\theta_0 x_0^{(i)} + \theta_1 x_1^{(i)} + \theta_2 x_2^{(i)}
+            + \ldots + \theta_n x_n^{(i)} -  y^{(i)})^2 \tag{3}\label{eq:3}  
+          \end{align}
+          and the multivariate gradient descent is written as:
+          <div style="padding-left: 5%">
+            <b>repeat</b>
+            <div style="padding-left: 5%">
+              <span>
+                \(\theta_j \gets \theta_j - \alpha \frac{\partial}{\partial \
+                  \theta_j}\left(J(\boldsymbol{\theta})\right)\)
+                </span>
+              <span style="padding-left: 10%">
+                  \(\triangleright\) Simultaneously update all \(\theta_j\)'s
+              </span>
+            </div>
+            <b>until</b> convergence
+          </div>
+        </p>
+
+        <p>
+          Since, we wish to minimize the total cost, we must have
+          \(\frac{\partial}{\partial \boldsymbol{\theta}}(J(\boldsymbol{\
+          \theta}))=0\) or \(\frac{\partial}{\partial \theta_j}(J(\
+          \boldsymbol{\theta}))=0\). In order to find value of 
+          \(\frac{\partial}{\partial \theta_j}(J(\boldsymbol{\theta}))\) let us
+          rewrite equation (\ref{eq:3}) by expanding its right hand side as:
+          \begin{align}
+            J(\boldsymbol{\theta}) &=
+            \frac{1}{2m}\left\{\left(\theta_0 x_0^{(1)} + \theta_1 x_1^{(1)} + \
+              \theta_2 x_2^{(1)} + \ldots + \theta_n x_n^{(1)} -  y^{(1)}\
+              \right)^2 + \right.\nonumber \\
+            & \qquad \qquad \quad \left(\theta_0 x_0^{(2)} + \theta_1 x_1^{(2)} \
+              + \theta_2 x_2^{(2)} + \ldots + \theta_n x_n^{(2)} -  y^{(2)}\
+              \right)^2 + \nonumber \\
+            & \qquad \qquad \qquad \qquad \vdots \nonumber \\
+            & \qquad \qquad \qquad \quad \left. \left(\theta_0 x_0^{(m)} + \
+              \theta_1 x_1^{(m)} + \theta_2 x_2^{(m)} + \ldots + \
+              \theta_n x_n^{(m)} -  y^{(m)}\right)^2\right\} \tag{4} \label{eq:4}
+          \end{align}
+        </p>
+
+        <p>
+          Therefore, we can compute
+          $$
+          \begin{align}
+            \frac{\partial}{\partial \theta_j}(J(\boldsymbol{\theta})) &=  \
+              \frac{2}{2m}\left\{\textcolor{blue}{\left(\underline{\
+              \theta_0 x_0^{(1)} + \theta_1 x_1^{(1)} + \theta_2 x_2^{(1)} +\
+                \ldots + \theta_n x_n^{(1)}} -  y^{(1)}\right)}\cdot x_j^{(1)}\
+                + \right.\nonumber \\
+            & \qquad \qquad \ \ \textcolor{blue}{\left(\underline{\theta_0 \
+              x_0^{(2)} + \theta_1 x_1^{(2)} + \theta_2 x_2^{(2)} + \ldots + \
+              \theta_n x_n^{(2)}} -  y^{(2)}\right)}\cdot x_j^{(2)} + \
+              \nonumber \\
+            & \qquad \qquad \qquad \qquad \vdots \nonumber \\
+            & \qquad \qquad \qquad \left. \textcolor{blue}{\left(\underline{\
+              \theta_0 x_0^{(m)} + \theta_1 x_1^{(m)} + \theta_2 x_2^{(m)} + \
+              \ldots + \theta_n x_n^{(m)}} -  y^{(m)}\right)}\cdot x_j^{(m)}\
+              \right\} \tag{5} \label{eq:5}\\
+            &=  \frac{1}{m} \sum_{i=1}^{m} \left(\theta_0 x_0^{(i)} + \
+              \theta_1 x_1^{(i)} + \theta_2 x_2^{(i)} + \ldots + \
+              \theta_n x_n^{(i)} -  y^{(i)}\right)\cdot x_j^{(i)} \nonumber \\
+            &=  \frac{1}{m} \sum_{i=1}^{m} \left(\left(\boldsymbol{x}^{(i)}\
+              \right)^{T}\boldsymbol{\theta} -  y^{(i)}\right)\cdot x_j^{(i)}\
+              \tag{6} \label{eq:6}
+          \end{align}
+          $$
+          Using equation (\ref{eq:6}) we can rewrite the multivariate gradient
+          descent as:
+          <div style="padding-left: 5%">
+              <b>repeat</b>
+              <div style="padding-left: 5%">
+                <span>
+                    \(\theta_j \gets \theta_j - \frac{\alpha}{m} \sum_{i=1}^{m} \
+                    \left(\left(\mathbf{x}^{(i)}\right)^{T}\boldsymbol{\theta} - \
+                    y^{(i)}\right)\cdot x_j^{(i)}\)
+                  </span>
+                <span style="padding-left: 5%">
+                    \(\triangleright\) Simultaneously update all \(\theta_j\)'s
+                </span>
+              </div>
+              <b>until</b> convergence
+          </div>
+        </p>
+
+        <h3>3. VECTORIZED FORM OF GRADIENT DESCENT</h3>
+
+        <p>
+          Now, we will try to write the gradient descent algorithm using a compact
+          vectorized form. To do that, notice that the sum series shown as 
+          dashed underlined text within the highlighted parts of the equation 
+          (\ref{eq:5}) are nothing but the individual terms of the matrix
+          \(\mathbf{X}\boldsymbol{\theta}\):
+          \[
+            \mathbf{X} = 
+            \begin{bmatrix}
+              x_{0}^{(1)} & x_{1}^{(1)} & \cdots & x_{n}^{(1)} \\
+              x_{0}^{(1)} & x_{1}^{(2)} & \cdots & x_{n}^{(2)} \\
+              \vdots      & \vdots      & \ddots & \vdots \\
+              x_{0}^{(1)} & x_{1}^{(m)} & \cdots & x_{n}^{(m)} \\
+            \end{bmatrix}_{\textcolor{red}{m \times (n+1)}}
+            \text{,} \quad
+            \boldsymbol{\theta} = 
+            \begin{bmatrix}
+            \theta_0 \\
+            \theta_1 \\
+            \theta_2 \\
+            \vdots \\
+            \theta_n
+            \end{bmatrix}_{\textcolor{red}{(n+1) \times 1}}
+          \]
+          therefore, 
+          $$
+          \begin{equation} \tag{7} \label{eq:7}
+            \mathbf{X}\boldsymbol{\theta} = 
+            \begin{bmatrix}
+            \underline{\theta_0 x_{0}^{(1)} + \theta_1 x_{1}^{(1)} + \cdots + \
+              \theta_n x_{n}^{(1)}} \\
+            \underline{\theta_0 x_{0}^{(2)} + \theta_1 x_{1}^{(2)} + \cdots + \
+              \theta_n x_{n}^{(2)}} \\
+            \vdots \\
+            \underline{\theta_0 x_{0}^{(m)} + \theta_1 x_{1}^{(m)} + \cdots + \
+              \theta_n x_{n}^{(m)}}
+            \end{bmatrix}_{\textcolor{red}{m \times 1}}
+          \end{equation}
+          $$
+
+          We can easily see that the parts of the equation (\ref{eq:5}) shown in
+          <span style="color: blue">blue text</span> are nothing but the 
+          individual terms of the below <span style="color: red">\(m\)</span>
+          dimensional vector
+          $$
+          \begin{equation} \tag{8} \label{eq:8}
+           \mathbf{X}\boldsymbol{\theta} - \mathbf{y} =
+            \begin{bmatrix}
+             \textcolor{blue}{\underline{\theta_0 x_{0}^{(1)} + \
+               \theta_1 x_{1}^{(1)} + \cdots + \theta_n x_{n}^{(1)}} - y^{(1)}} \\
+             \textcolor{blue}{\underline{\theta_0 x_{0}^{(2)} + \
+               \theta_1 x_{1}^{(2)} + \cdots + \theta_n x_{n}^{(2)}} - y^{(2)}} \\
+             \vdots \\
+             \textcolor{blue}{\underline{\theta_0 x_{0}^{(m)} + \
+               \theta_1 x_{1}^{(m)} + \cdots + \theta_n x_{n}^{(m)}} - y^{(m)}}
+            \end{bmatrix}_{\textcolor{red}{m \times 1}}
+          \end{equation}
+          $$
+          (equation (\ref{eq:7}) & (\ref{eq:8}) use highlighted and dashed
+          underlined text to indicate correspondence with equation (\ref{eq:5})).
+        </p>
+
+        <p style="text-indent: 2.0em">
+          This vector \(\mathbf{X}\boldsymbol{\theta} - \mathbf{y}\) allows us to
+          write expression for \(J(\boldsymbol{\theta})\) in a much compact form.
+          We note that the sum inside curly braces \((\{\})\) of equation 
+          (\ref{eq:4}) is nothing but the sum of the squares of individual
+          components of the vector \(\mathbf{X}\boldsymbol{\theta} - \mathbf{y}\)
+          expressed in equation (\ref{eq:8}). Applying the fact that for any \(k\)
+          dimensional vector \(\mathbf{v}\) the sum of squares of its each
+          component \(v_i, i = 1, 2, \cdots, k\) can be written as:
+          \[
+            \sum_{i=1}^{k} v_i^2 = 
+            \begin{bmatrix}
+              v_1 & v_2 & \cdots & v_k
+            \end{bmatrix}
+            \begin{bmatrix}
+              v_1 \\
+              v_2 \\
+              \vdots \\
+              v_k
+            \end{bmatrix} = \mathbf{v}^T\mathbf{v}
+          \]
+          we can rewrite the equation (\ref{eq:4}) as:
+          \begin{equation}
+            J(\boldsymbol{\theta}) = \frac{1}{2m}\left(\mathbf{X}\boldsymbol{\
+                                       \theta} - \
+                            \mathbf{y}\right)^T\left(\mathbf{X}\boldsymbol{\
+                                \theta} - \
+                            \mathbf{y}\right) \tag{9} \label{eq:9}
+          \end{equation}
+        </p>
+
+        <p>
+          Let us evaluate \(\mathbf{X}^{T}(\mathbf{X}\boldsymbol{\theta} - \mathbf{y})\) 
+          as below:
+          \begin{align}
+            \mathbf{X}^{T}\left(\mathbf{X}\boldsymbol{\theta} - \mathbf{y}\
+               \right) \nonumber \\
+            & & &= 
+            \underbrace{
+            \begin{bmatrix}
+              x_{0}^{(1)} & x_{0}^{(2)} & \cdots & x_{0}^{(m)} \\
+              x_{1}^{(1)} & x_{1}^{(2)} & \cdots & x_{1}^{(m)} \\
+              \vdots      & \vdots      & \ddots & \vdots \\
+              x_{n}^{(1)} & x_{n}^{(2)} & \cdots & x_{n}^{(m)}
+            \end{bmatrix}}_{\textcolor{red}{(n + 1) \times m}}
+            \underbrace{
+            \begin{bmatrix}
+              \theta_0 x_{0}^{(1)} + \theta_1 x_{1}^{(1)} + \cdots + \
+                  \theta_n x_{n}^{(1)} - y^{(1)} \\
+              \theta_0 x_{0}^{(2)} + \theta_1 x_{1}^{(2)} + \cdots + \
+                  \theta_n x_{n}^{(2)} - y^{(2)} \\
+              \vdots \\
+              \theta_0 x_{0}^{(m)} + \theta_1 x_{1}^{(m)} + \cdots + \
+                  \theta_n x_{n}^{(m)} - y^{(m)}
+            \end{bmatrix}}_{\textcolor{red}{m \times 1}} \nonumber \\
+            & & &=
+            \underbrace{
+            \begin{bmatrix}
+              \left.
+                \begin{matrix}
+                \left( \theta_0 x_{0}^{(1)} + \theta_1 x_{1}^{(1)} + \
+                  \cdots + \theta_n x_{n}^{(1)} - y^{(1)} \right) \
+                  \cdot x_{\textcolor{magenta}{0}}^{(1)} + \qquad \qquad \\
+                \left( \theta_0 x_{0}^{(2)} + \theta_1 x_{1}^{(2)} + \
+                  \cdots + \theta_n x_{n}^{(2)} - y^{(2)} \right) \
+                  \cdot x_{\textcolor{magenta}{0}}^{(2)} + \qquad \\
+                \cdots \\
+                \qquad \left( \theta_0 x_{0}^{(m)} + \theta_1 x_{1}^{(m)} + \
+                  \cdots + \theta_n x_{n}^{(m)} - y^{(m)} \right) \cdot \
+                  x_{\textcolor{magenta}{0}}^{(m)}
+                \end{matrix}
+              \right\}\textcolor{magenta}{0^{th} \ term}\\
+              \\
+              \left.
+                \begin{matrix}
+                \left( \theta_0 x_{0}^{(1)} + \theta_1 x_{1}^{(1)} + \cdots + \
+                 \theta_n x_{n}^{(1)} - y^{(1)} \right) \cdot \
+                 x_{\textcolor{magenta}{1}}^{(1)} + \qquad \qquad \\
+                \left( \theta_0 x_{0}^{(2)} + \theta_1 x_{1}^{(2)} + \cdots + \
+                 \theta_n x_{n}^{(2)} - y^{(2)} \right) \cdot \
+                 x_{\textcolor{magenta}{1}}^{(2)} + \qquad \\
+                \cdots \\
+                \qquad \left( \theta_0 x_{0}^{(m)} + \theta_1 x_{1}^{(m)} + \
+                  \cdots + \theta_n x_{n}^{(m)} - y^{(m)} \right) \cdot \
+                  x_{\textcolor{magenta}{1}}^{(m)}
+              \end{matrix}
+              \right\}\textcolor{magenta}{1^{st} \ term}\\
+              \\
+              \vdots \\
+              \\
+              \left.
+                \begin{matrix}
+                \left( \theta_0 x_{0}^{(1)} + \theta_1 x_{1}^{(1)} + \cdots + \
+                  \theta_n x_{n}^{(1)} - y^{(1)} \right) \cdot \
+                  x_{\textcolor{magenta}{j}}^{(1)} + \qquad \qquad \\
+                \left( \theta_0 x_{0}^{(2)} + \theta_1 x_{1}^{(2)} + \cdots + \
+                  \theta_n x_{n}^{(2)} - y^{(2)} \right) \cdot \
+                  x_{\textcolor{magenta}{j}}^{(2)} + \qquad \\
+                \cdots \\
+                \qquad \left( \theta_0 x_{0}^{(m)} + \theta_1 x_{1}^{(m)} + \
+                  \cdots + \theta_n x_{n}^{(m)} - y^{(m)} \right) \cdot \
+                  x_{\textcolor{magenta}{j}}^{(m)}
+                \end{matrix}
+              \right\}\textcolor{magenta}{j^{th} \ term}\\
+              \\
+              \vdots \\
+              \\
+              \left.
+                \begin{matrix}
+                \left( \theta_0 x_{0}^{(1)} + \theta_1 x_{1}^{(1)} + \cdots + \
+                  \theta_n x_{n}^{(1)} - y^{(1)} \right) \cdot \
+                  x_{\textcolor{magenta}{n}}^{(1)} + \qquad \qquad \\
+                \hfill \left( \theta_0 x_{0}^{(1)} + \theta_1 x_{1}^{(2)} + \
+                  \cdots + \theta_n x_{n}^{(2)} - y^{(2)} \right) \cdot \
+                  x_{\textcolor{magenta}{n}}^{(2)} + \qquad \\
+                \cdots \\
+                \hfill \left( \theta_0 x_{0}^{(1)} + \theta_1 x_{1}^{(2)} + \
+                  \cdots + \theta_n x_{n}^{(2)} - y^{(2)} \right) \cdot \
+                  x_{\textcolor{magenta}{n}}^{(m)} 
+                \end{matrix}
+              \right\}\textcolor{magenta}{n^{th} \ term}
+            \end{bmatrix}}_{\textcolor{red}{(n+1) \times 1}} \tag{10}
+          \end{align}
+
+          Now, if we carefully observe the sum inside curly braces \((\{\})\) of
+          equation (\ref{eq:5}) we can conclude that the sum is exactly the
+          <span style="color: magenta">\(j^{th}\)</span> term of the above
+          <span style="color: red">\((n + 1)\)</span> dimensional vector 
+          \(\mathbf{X}^{T}\left(\mathbf{X}\boldsymbol{\theta} - \
+          \mathbf{y}\right)\). 
+
+          Therefore, if we let \(\mathbf{w} = \mathbf{X}^{T}\left(\mathbf{X}\
+          \boldsymbol{\theta} - \mathbf{y}\right) \in \mathbb{R}^{(n+1)}\) 
+          and \(w_j\) denotes the \(j^{th}\) term of \(\mathbf{w} 
+          \ (j = 0, 1, \cdots, n)\) we can rewrite equation (\ref{eq:5}) as:
+          \[
+            \frac{\partial}{\partial \theta_j}(J(\boldsymbol{\theta})) =  \
+              \frac{1}{m}w_j
+          \]
+
+          Hence, the multivariate gradient descent can be written in <i>vectorized
+          form</i> as below:
+          <div style="padding-left: 5%">
+              <b>repeat</b>
+              <div style="padding-left: 5%">
+                <span>
+                  \(\boldsymbol{\theta} \gets \boldsymbol{\theta} - \
+                    \frac{\alpha}{m} \left(\mathbf{X}^{T}\left(\mathbf{X}\
+                    \boldsymbol{\theta} - \mathbf{y}\right)\right)\)
+                </span>
+                <span style="padding-left: 5%">
+                    \(\triangleright\) Simultaneously update all \(\theta_j\)'s
+                </span>
+              </div>
+              <b>until</b> convergence
+          </div>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Menu Toggle Script -->
+  <script>
+  $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+  });
+  </script>
+
+  </body>
+  </html>

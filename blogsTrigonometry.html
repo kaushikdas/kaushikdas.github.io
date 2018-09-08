@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <!-- Theme Made By www.w3schools.com - No Copyright -->
+    <title>Trigonometry</title>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({ TeX: { extensions: ["color.js"] }});
+    </script>  
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans|Libre+Baskerville" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="styles/blogLinearRegression.css" type="text/css" rel="stylesheet">
+  </head>
+
+  <body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+        </button>
+        <a class="navbar-brand" href="index.html">Kaushik Das</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="blogsIndex.html">Blogs</a></li>
+          <li><a href="#">Drawings</a></li>
+          <li><a href="#">Photos</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+      <ul class="sidebar-nav">
+        <li class="sidebar-brand">
+          <a href="#">Blog menu</a>
+        </li>
+        <li>
+          <a href="blogsIndex.html">Linear regression</a>
+        </li>
+        <li>
+          <a href="#">Trigonometry</a>
+        </li>
+      </ul>
+  </div>
+  <!-- /#sidebar-wrapper -->
+
+  <!-- Page Content -->
+  <div id="page-content-wrapper">
+    <div class="container-fluid">
+      <a href="#menu-toggle" class="btn btn-primary" id="menu-toggle">Toggle Menu</a>
+      <div class="mathematical-text">
+        <h1>Solutions to some good problems</h1>
+        <h3>1. SECTION 1</h3>
+        <table>
+          <tr>
+            <td>\(\boldsymbol{1.1}\)</td>
+            <td>
+              <div style="padding-left: 1em">
+                If \(32\sin^{6}\theta = 10 - 15 \cos2\theta + b \cos4\theta + 
+                a\cos6\theta\) show that \(\tan\theta\tan5\theta = 
+                \frac{a + b - 5}{a - b + 7}\)
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>
+              <div style="padding-left: 1em; padding-top: 1em">
+                We know
+                \[
+                  \begin{align}
+                    \cos2\theta &= \cos\theta\cos\theta - \sin\theta\sin\theta \\
+                                &= \cos^{2}\theta - \sin^{2}\theta \\
+                                &= 1 - \sin^{2}\theta - \sin^{2}\theta \\
+                                &= 1 - 2\sin^{2}\theta \\
+                    \Rightarrow2\sin^{2}\theta &= 1 - \cos2\theta
+                  \end{align}
+                \]
+                Using this we can write
+                \[
+                  \begin{align}
+                    32\sin^{6}\theta &= 4\cdot8\sin^{6}\theta \\
+                                     &= 4(2\sin^{2}\theta)^{3} \\
+                                     &= 4(1 - \cos2\theta)^{3} \\
+                                     &= 4(1^3 - \cos^{3}2\theta - \
+                                          3\cos2\theta + 3\cos^{2}2\theta) \\
+                                     &= 4 - 12\cos2\theta - \
+                                          4\cos^{3}2\theta + \
+                                          12\cos^{2}2\theta \tag{1}\label{eq:1.1.1}
+                  \end{align}
+                \]
+                Letting \(A = 2\theta\) we can write 3rd term equation
+                (\ref{eq:1.1.1})'s right side as
+                \[
+                  \begin{align}
+                    4\cos^{3}2\theta &= 4\cos^{3}A \\
+                                     &= \cos3A + 3\cos A \
+                                     \qquad\left[ \because \cos3A = \
+                                     4\cos^{3}A - 3\cos A\right] \\
+                    \Rightarrow 4\cos^{3}2\theta &= \cos6\theta + 3\cos2\theta \
+                                                           \tag{2}\label{eq:1.1.2}
+                  \end{align}
+                \]
+                Likewise we can write
+                \[
+                  \begin{align}
+                  12\cos^{2}\theta &= 6 \cdot 2\cos^{2}\theta \\
+                                   &= 6 \cos 2\cos^{2}A \\
+                                   &= 6(\cos 2A + 1) \\
+                                   &= 6\cos 4\theta + 6 \tag{3}\label{eq:1.1.3}
+                  \end{align}
+                \]
+                Using equations (\ref{eq:1.1.2}) and (\ref{eq:1.1.3}) in 
+                equation (\ref{eq:1.1.1}) we get,
+                \[
+                  \begin{align}
+                  32\sin^{6}\theta &= 4 - 12\cos 2\theta - \cos 6\theta \
+                                        - 3\cos 2\theta + 6 \cos 4\theta + 6 \\
+                                   &= 10 - 15 \cos 2\theta + 6 \cos 4\theta \
+                                        - \cos 6\theta \tag{4}\label{eq:1.1.4}
+                  \end{align}
+                \]
+                Using the given information
+                \(32\sin^{6}\theta = 10 - 15 \cos2\theta + b \cos4\theta + 
+                a\cos6\theta\) in euqation(\ref{eq:1.1.4}) we get:
+                \[
+                  \begin{align}
+                    10 - 15 \cos 2\theta + 6 \cos 4\theta - \cos 6\theta \
+                       &= 10 - 15 \cos2\theta + b \cos4\theta + a\cos6\theta \\
+                    \Rightarrow (6 - b)\cos4\theta &= (1 + a)\cos 6\theta \\
+                    \Rightarrow \frac{\cos 4\theta}{\cos 6\theta} \
+                       &= \frac{1 + a}{6 - b} \\
+                    \Rightarrow \frac{\cos 4\theta - \cos 6\theta}{\cos 4\theta + \cos 6\theta} \
+                       &= \frac{1 + a - 6 + b}{1 + a + 6 - b} \
+                         \qquad \left[ \because a/b = c/d \Rightarrow \frac{a-b}{a+b}=\frac{c-d}{c+d}\right] \\
+                    \Rightarrow \frac{\cos(5\theta - \theta) - \cos(5\theta + \theta)}{\cos(5\theta - \theta) + \cos(5\theta + \theta)}\
+                       &= \frac{a+b-5}{a-b+7} \\
+                    \Rightarrow \frac{2\sin 5\theta\sin \theta}{2\cos5\theta\cos \theta}\
+                       &= \frac{a+b-5}{a-b+7} \\
+                    \Rightarrow \tan \theta\tan 5\theta \
+                       &= \frac{a+b-5}{a-b+7}
+                  \end{align}
+                \]
+                Hence proved.
+            </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Menu Toggle Script -->
+  <script>
+  $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+  });
+  </script>
+
+  </body>
+  </html>
