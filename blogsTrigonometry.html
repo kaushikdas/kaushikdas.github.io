@@ -79,7 +79,7 @@
           <tr>
             <td></td>
             <td>
-              <div style="padding-left: 1em; padding-top: 1em">
+              <div style="padding-left: 1em; padding-top: 1em;">
                 We know
                 \[
                   \begin{align}
@@ -103,7 +103,7 @@
                                           12\cos^{2}2\theta \tag{1}\label{eq:1.1.1}
                   \end{align}
                 \]
-                Letting \(A = 2\theta\) we can write 3rd term equation
+                Letting \(A = 2\theta\) we can write 3rd term in equation 
                 (\ref{eq:1.1.1})'s right side as
                 \[
                   \begin{align}
@@ -118,10 +118,10 @@
                 Likewise we can write
                 \[
                   \begin{align}
-                  12\cos^{2}\theta &= 6 \cdot 2\cos^{2}\theta \\
-                                   &= 6 \cos 2\cos^{2}A \\
-                                   &= 6(\cos 2A + 1) \\
-                                   &= 6\cos 4\theta + 6 \tag{3}\label{eq:1.1.3}
+                  12\cos^{2}2\theta &= 6 \cdot 2\cos^{2}2\theta \\
+                                    &= 6 \cdot 2\cos^{2}A \\
+                                    &= 6(\cos 2A + 1) \\
+                                    &= 6\cos 4\theta + 6 \tag{3}\label{eq:1.1.3}
                   \end{align}
                 \]
                 Using equations (\ref{eq:1.1.2}) and (\ref{eq:1.1.3}) in 
@@ -134,9 +134,9 @@
                                         - \cos 6\theta \tag{4}\label{eq:1.1.4}
                   \end{align}
                 \]
-                Using the given information
+                Applying the information given in the question that 
                 \(32\sin^{6}\theta = 10 - 15 \cos2\theta + b \cos4\theta + 
-                a\cos6\theta\) in euqation(\ref{eq:1.1.4}) we get:
+                a\cos6\theta\) we can write euqation (\ref{eq:1.1.4}) as:
                 \[
                   \begin{align}
                     10 - 15 \cos 2\theta + 6 \cos 4\theta - \cos 6\theta \
@@ -144,12 +144,23 @@
                     \Rightarrow (6 - b)\cos4\theta &= (1 + a)\cos 6\theta \\
                     \Rightarrow \frac{\cos 4\theta}{\cos 6\theta} \
                        &= \frac{1 + a}{6 - b} \\
-                    \Rightarrow \frac{\cos 4\theta - \cos 6\theta}{\cos 4\theta + \cos 6\theta} \
+                    \Rightarrow \frac{\cos 4\theta - \
+                                 \cos 6\theta}{\cos 4\theta + \cos 6\theta} \
                        &= \frac{1 + a - 6 + b}{1 + a + 6 - b} \
-                         \qquad \left[ \because a/b = c/d \Rightarrow \frac{a-b}{a+b}=\frac{c-d}{c+d}\right] \\
-                    \Rightarrow \frac{\cos(5\theta - \theta) - \cos(5\theta + \theta)}{\cos(5\theta - \theta) + \cos(5\theta + \theta)}\
-                       &= \frac{a+b-5}{a-b+7} \\
-                    \Rightarrow \frac{2\sin 5\theta\sin \theta}{2\cos5\theta\cos \theta}\
+                         \qquad \left[ \because a/b = c/d \Rightarrow \
+                         \frac{a-b}{a+b}=\frac{c-d}{c+d}\right] \\
+                    \Rightarrow \frac{\cos(5\theta - \theta) - \
+                        \cos(5\theta + \theta)}{\cos(5\theta - \theta) + \
+                        \cos(5\theta + \theta)}\
+                       &= \frac{a+b-5}{a-b+7} \tag{5}\label{eq:1.1.5}
+                  \end{align}
+                \]
+                Using the formulae \(2\sin A\sin B=\cos(A-B)-\cos(A+B)\) and 
+                \(2\cos A\cos B=\cos(A-B)+\cos(A+B)\) in equation 
+                (\ref{eq:1.1.5}) we get
+                \[
+                  \begin{align}
+                    \frac{2\sin 5\theta\sin \theta}{2\cos5\theta\cos \theta}\
                        &= \frac{a+b-5}{a-b+7} \\
                     \Rightarrow \tan \theta\tan 5\theta \
                        &= \frac{a+b-5}{a-b+7}
